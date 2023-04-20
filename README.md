@@ -7,5 +7,5 @@ Computer Vision multi-page streamlit app
 
 YOLO team: <br>
 [Egor](https://github.com/danchenkoEgor)<br>
-[Anya Baydenko](https://github.com/sunny-annie)
+[Anya Baydenko](https://github.com/sunny-annie)<br>
 [GalkaMT](https://github.com/GalkaMT)<br>
