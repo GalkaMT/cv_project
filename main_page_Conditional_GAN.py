@@ -64,10 +64,57 @@ class Generator(nn.Module):
 gen = Generator()
 gen.load_state_dict(torch.load('cdcgan_weights.pth', map_location=device))
 
+st.write('### Sudoku!')
+base  = 3
+side  = base*base
 
-numbers = st.text_input('Birth Date', '23.06.1912')
+# pattern for a baseline valid solution
+def pattern(r,c): return (base*(r%base)+r//base+c)%side
+
+# randomize rows, columns and numbers (of valid base pattern)
+from random import sample
+def shuffle(s): return sample(s,len(s)) 
+rBase = range(base) 
+rows  = [ g*base + r for g in shuffle(rBase) for r in shuffle(rBase) ] 
+cols  = [ g*base + c for g in shuffle(rBase) for c in shuffle(rBase) ]
+nums  = shuffle(range(1,base*base+1))
+
+# produce board using randomized baseline pattern
+board = [ [nums[pattern(r,c)] for c in cols] for r in rows ]
+
+
+squares = side*side
+empties = squares * 3//4
+for p in sample(range(squares),empties):
+    board[p//side][p%side] = 0
+n = -1
+numSize = len(str(side))
+fig, axs = plt.subplots(nrows=9, ncols=9, figsize = (2, 2))
+for line in board:
+    for number in line:
+        n += 1
+        ax = plt.subplot(9, 9, n + 1)
+        if number == 0:
+            ax.plot()
+            plt.xticks([])
+            plt.yticks([])
+            ax.spines["top"].set_visible(True)
+            ax.spines["right"].set_visible(True)
+            ax.spines["left"].set_visible(True)
+        else:
+            random_part = torch.randn(1, 100, 1, 1).to(device)
+            input_part = torch.nn.functional.one_hot(torch.tensor(number), 10).type(torch.float32).to(device)[None, :, None, None].to(device)
+
+            fake_image = gen(random_part, input_part).detach().cpu().numpy().squeeze()
+            ax.imshow(fake_image)
+            ax.axis('off')
+st.pyplot(fig)
+st.write('### Если цифры шакальные, то вот подсказка:')
+st.dataframe(data=board)
+
+st.write('### Можно ввести любую последовательность цифр:')
+numbers = st.text_input('Enter something', '23.06.1912')
 numbers = numbers.replace('.', '')
-
 if numbers is not None:
 
     fig, axs = plt.subplots(nrows=1, ncols=len(numbers), figsize = (2, 2))
