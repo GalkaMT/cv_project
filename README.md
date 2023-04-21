@@ -1,5 +1,5 @@
 # cv_project
-[Computer Vision multi-page streamlit app](https://galkamt-cv-project-main-page-conditional-gan-sqg9pq.streamlit.app/)
+[Computer Vision multi-page streamlit app](https://galkamt-cv-project-main-page-conditional-gan-qv7r8g.streamlit.app/)
 - Multipage-приложение с использованием [streamlit](streamlit.io):
    - Генерация заданной цифры с помощью Conditional GAN (используем или на датасете MNIST, или то, на чем обучали модель во вторник)
    - Детекция объектов с помощью [YOLOv5](https://github.com/ultralytics/yolov5)<br>
