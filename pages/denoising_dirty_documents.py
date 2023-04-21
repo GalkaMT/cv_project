@@ -63,7 +63,7 @@ class ConvAutoencoder(nn.Module):
 @st.cache_resource    
 def load_model():
     model = ConvAutoencoder()
-    model.load_state_dict(torch.load('../denoising_model_weights.pth'))
+    model.load_state_dict(torch.load('denoising_model_weights.pth'))
     model.eval()
     return model
 
