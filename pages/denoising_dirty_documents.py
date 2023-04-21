@@ -75,10 +75,10 @@ with tab1:
     st.subheader("Выберите изображение, чтобы посмотреть результат очистки:")
     demo_images = ['1', '2', '3']
     for i in range (len(demo_images)):
-        demo_image = Image.open(f'../denoising_demo/{i+1}.png')
+        demo_image = Image.open(f'denoising_demo/{i+1}.png')
         result = st.button(f'Пример очистки №{i+1}')
         if result:
-            test_image = np.array(Image.open(f'../denoising_demo/{i+1}.png').convert('L'))
+            test_image = np.array(Image.open(f'denoising_demo/{i+1}.png').convert('L'))
             test_tensor = torch.Tensor(test_image).unsqueeze(0)
             test_tensor = (test_tensor.float()/255).unsqueeze(0)
             clean_test_image = model(test_tensor)
